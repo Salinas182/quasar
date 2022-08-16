@@ -8,7 +8,7 @@
           round
           icon="las la-bars"
           aria-label="Menu"
-          @click="toggleLeftDrawer"
+          @click="toggleSideMenu"
         />
 
         <q-toolbar-title>
@@ -20,7 +20,7 @@
     </q-header>
 
     <q-drawer
-      v-model="leftDrawerOpen"
+      v-model="isSideMenuOpen"
       show-if-above
       bordered
     >
@@ -46,29 +46,10 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent } from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
-
-const linksList = [
-  {
-    title: 'Typography',
-    caption: 'Tipos de letras',
-    icon: 'las la-align-left',
-    link: 'typography'
-  },
-  {
-    title: 'Flex Layout',
-    caption: 'Estilos con flex',
-    icon: 'las la-layer-group',
-    link: 'flex'
-  },
-  {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'las la-graduation-cap',
-    link: 'https://quasar.dev'
-  },
-]
+import { linksList } from "../router/links-list"
+import useUI from "../composables/useUI"
 
 export default defineComponent({
   name: 'MainLayout',
@@ -78,14 +59,12 @@ export default defineComponent({
   },
 
   setup () {
-    const leftDrawerOpen = ref(false)
+    const { isSideMenuOpen, toggleSideMenu } = useUI()
 
     return {
       essentialLinks: linksList,
-      leftDrawerOpen,
-      toggleLeftDrawer () {
-        leftDrawerOpen.value = !leftDrawerOpen.value
-      }
+      isSideMenuOpen,
+      toggleSideMenu,
     }
   }
 })
